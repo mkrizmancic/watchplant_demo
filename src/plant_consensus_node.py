@@ -54,8 +54,9 @@ class SimpleConsensusNode(object):
                     if not self.fixed:
                         self.value = self.value + self.alpha * (other_value - self.value)
                     else:
-                        if max(map(lambda x: x - self.value, self.other_values.values())) <= 5:
+                        if max(map(lambda x: abs(x - self.value), self.other_values.values())) <= 5:
                             self.fixed = False
+                            rospy.loginfo('Consensus reached')
 
             pub.publish(self.value)
             pubg.publish(self.value, self.name)

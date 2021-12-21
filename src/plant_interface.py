@@ -82,7 +82,7 @@ class PlantInterface(object):
 
     def send_color(self, color):
         self.mu.set_color(color)
-        values = {'100': 0, '110': 60, '010': 120, '011': 180, '001': 210, '101': 240}
+        values = {'100': 0, '110': 60, '010': 120, '011': 180, '001': 240, '101': 300}
         try:
             rospy.wait_for_service('set_value')
             service_func = rospy.ServiceProxy('set_value', SetValue)
@@ -200,11 +200,11 @@ class PlantInterface(object):
 
         if data.air_temp > 30 and self.temp_was_low:
             self.send_color('100')
-            self.temp_was_low = True
+            self.temp_was_low = False
             rospy.loginfo('Air temperature low->high')
         elif data.air_temp < 27 and not self.temp_was_low:
             self.send_color('001')
-            self.temp_was_low = False
+            self.temp_was_low = True
             rospy.loginfo('Air temperature high->low')
 
     @staticmethod

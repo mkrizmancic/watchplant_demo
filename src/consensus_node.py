@@ -62,6 +62,7 @@ class SimpleConsensusNode(object):
                     else:
                         if max(map(lambda x: x - self.value, self.other_values.values())) <= 5:
                             self.fixed = False
+                            rospy.loginfo('Consensus reached!')
 
             pub.publish(self.value)
             pubg.publish(self.value, self.name)
