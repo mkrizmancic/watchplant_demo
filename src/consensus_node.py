@@ -23,7 +23,7 @@ class SimpleConsensusNode(object):
         self.num_of_agents = len(self.config['mapping'])
 
         self.name = rospy.get_namespace().strip('/')
-        self.index = int(self.config['mapping'].index(name))
+        self.index = int(self.config['mapping'].index(self.name))
         self.alpha = self.config['alpha']
         self.fixed = False
         self.mutex = threading.Lock()
