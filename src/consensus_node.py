@@ -60,7 +60,7 @@ class SimpleConsensusNode(object):
                     if not self.fixed:
                         self.value = self.value + self.alpha * (other_value - self.value)
                     else:
-                        if max(map(lambda x: x - self.value, self.other_values.values())) <= 5:
+                        if max(map(lambda x: abs(x - self.value), self.other_values.values())) <= 5:
                             self.fixed = False
                             rospy.loginfo('Consensus reached!')
 
@@ -81,6 +81,7 @@ class SimpleConsensusNode(object):
         with self.mutex:
             self.value = req.value
             self.fixed = True
+            rospy.loginfo("Value is fixed")
         return SetValueResponse()
 
     def set_random(self, req=None):
