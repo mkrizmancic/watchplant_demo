@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 import random
-import numpy as np
 try:
     import queue
 except ImportError:
