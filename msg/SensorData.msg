@@ -1,0 +1,14 @@
+std_msgs/Header header
+float64 pcb_temp
+geometry_msgs/Vector3 mag
+float64 mag_total
+float64 air_temp
+float64 air_hum
+float64 air_press
+float64 light
+float64 rf_power
+float64 diff_pot_CH1
+float64 diff_pot_CH2
+float64 transpiration
+float64 soil_moist
+float64 soil_temp

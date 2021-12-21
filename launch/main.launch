@@ -1,0 +1,6 @@
+<launch>
+  <rosparam command="load" file="$(find watchplant_demo)/params/config.yaml" param="consensus_params"/>
+
+  <node pkg="watchplant_demo" type="plant_interface.py" name="plant_interface" ns="local" output="screen"/>
+  <node pkg="watchplant_demo" type="plant_consensus_node.py" name="node" ns="local" output="screen"/>
+</launch>
