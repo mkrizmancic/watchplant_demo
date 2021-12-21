@@ -183,23 +183,29 @@ class PlantInterface(object):
         if data.soil_moist > 350 and self.moist_was_low:
             self.send_color('010')
             self.moist_was_low = False
+            rospy.loginfo('Soil moisture low->high')
         elif data.soil_moist < 300 and not self.moist_was_low:
             self.send_color('110')
             self.moist_was_low = True
+            rospy.loginfo('Soil moisture high->low')
 
         if data.light > 1000 and self.light_was_low:
-            self.send_color('000')
+            self.send_color('101')
             self.light_was_low = False
+            rospy.loginfo('Ambient light low->high')
         elif data.light < 800 and not self.light_was_low:
-            self.send_color('111')
+            self.send_color('011')
             self.light_was_low = True
+            rospy.loginfo('Ambient light high->low')
 
         if data.air_temp > 30 and self.temp_was_low:
             self.send_color('100')
             self.temp_was_low = True
+            rospy.loginfo('Air temperature low->high')
         elif data.air_temp < 27 and not self.temp_was_low:
             self.send_color('001')
             self.temp_was_low = False
+            rospy.loginfo('Air temperature high->low')
 
     @staticmethod
     def transform_data(string_data):
