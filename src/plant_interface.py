@@ -1,8 +1,9 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 from __future__ import division
 import math
 import time
+import threading
 import datetime
 import numpy as np
 import rospy
@@ -25,6 +26,8 @@ class PlantInterface(object):
         self.temp_was_low = True
         self.light_was_low = True
 
+        self.mutex = threading.Lock()
+
         # Publishers.
         self.data = SensorData()
         self.pub = rospy.Publisher('plant_data', SensorData, queue_size=1)
@@ -42,7 +45,8 @@ class PlantInterface(object):
         # Main loop.
         while not rospy.is_shutdown():
             # Get the next data set
-            next_line = self.mu.get_next()
+            with self.mutex:
+                next_line = self.mu.get_next()
             header, payload = self.classify_message(next_line)
             sender, msg_type = header
 
@@ -67,18 +71,24 @@ class PlantInterface(object):
 
 
     def callback(self, msg):
-        if msg.data < 30 or msg.data >= 330:
-            self.mu.set_color('100')
-        elif 30 <= msg.data < 70:
-            self.mu.set_color('110')
-        elif 70 <= msg.data < 160:
-            self.mu.set_color('010')
-        elif 160 <= msg.data < 210:
-            self.mu.set_color('011')
-        elif 210 <= msg.data < 280:
-            self.mu.set_color('001')
-        elif 280 <= msg.data < 330:
-            self.mu.set_color('101')
+        with self.mutex:
+            print(msg)
+            if msg.data < 30 or msg.data >= 330:
+                new_color = '100'
+            elif 30 <= msg.data < 70:
+                new_color = '110'
+            elif 70 <= msg.data < 160:
+                new_color = '010'
+            elif 160 <= msg.data < 210:
+                new_color = '011'
+            elif 210 <= msg.data < 280:
+                new_color = '001'
+            elif 280 <= msg.data < 330:
+                new_color = '101'
+
+            if new_color != self.current_color:
+                self.mu.set_color(new_color)
+                self.current_color = new_color
 
     def send_color(self, color):
         self.mu.set_color(color)
@@ -184,7 +194,7 @@ class PlantInterface(object):
             self.send_color('010')
             self.moist_was_low = False
             rospy.loginfo('Soil moisture low->high')
-        elif data.soil_moist < 300 and not self.moist_was_low:
+        elif data.soil_moist < 330 and not self.moist_was_low:
             self.send_color('110')
             self.moist_was_low = True
             rospy.loginfo('Soil moisture high->low')

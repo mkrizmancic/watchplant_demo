@@ -68,4 +68,5 @@ class Cybres_MU:
         self.ser.write(set_interval.encode())
 
     def set_color(self, rgb):
-        self.ser.write(b'wk{}*'.format(rgb))
+        color_cmd = f'wk{rgb}*'
+        self.ser.write(color_cmd.encode())

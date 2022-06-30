@@ -1,18 +1,18 @@
 mapping:
   - 'local'
-  - 'rpi0'
-  - 'rpi1'
-  - 'rpi2'
+  - 'rpi8'
+  - 'rpi7'
+  - 'rpi6'
+  - 'rpi5'
   - 'rpi3'
-  - 'rpi4'
 
 adjacency:
-  - [0, 1, 0, 0, 0, 1]
+  - [0, 1, 0, 0, 0, 0]
   - [1, 0, 1, 0, 0, 0]
   - [0, 1, 0, 1, 0, 0]
   - [0, 0, 1, 0, 1, 0]
   - [0, 0, 0, 1, 0, 1]
-  - [1, 0, 0, 0, 1, 0]
+  - [0, 0, 0, 0, 1, 0]
 
 initial_values:
   range: [0, 360, 1]  # star, stop, step // if step == 0, range is continuous

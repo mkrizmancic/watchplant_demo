@@ -3,4 +3,5 @@
 
   <node pkg="watchplant_demo" type="plant_interface.py" name="plant_interface" ns="local" output="screen"/>
   <node pkg="watchplant_demo" type="plant_consensus_node.py" name="node" ns="local" output="screen"/>
+  <node pkg="watchplant_demo" type="read_ble.py" name="ble" ns="local" output="screen"/>
 </launch>
