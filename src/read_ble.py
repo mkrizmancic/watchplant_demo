@@ -20,8 +20,8 @@ def main():
             print(f"[RECV]> {val}", end="\n", flush=True)
 
             try:
-                rospy.wait_for_service('/rpi3/set_value')
-                service_func = rospy.ServiceProxy('/rpi3/set_value', SetValue)
+                rospy.wait_for_service('set_value')
+                service_func = rospy.ServiceProxy('set_value', SetValue)
                 req = SetValueRequest()
                 req.value = float(val)
                 service_func(req)

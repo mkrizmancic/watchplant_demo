@@ -13,6 +13,6 @@ killall() {
 
 sudo LED_server &
 sleep 2
-ROS_NAMESPACE="$HOSTNAME" rosrun watchplant_demo consensus_node.py &
+ROS_NAMESPACE="$NAMESPACE" rosrun watchplant_demo consensus_node.py &
 
 cat
