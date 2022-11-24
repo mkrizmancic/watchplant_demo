@@ -1,10 +1,10 @@
 mapping:
   - 'local'
-  - 'rpi8'
-  - 'rpi7'
-  - 'rpi6'
-  - 'rpi5'
+  - 'rpi0'
+  - 'rpi1'
+  - 'rpi2'
   - 'rpi3'
+  - 'rpi7'
 
 adjacency:
   - [0, 1, 0, 0, 0, 0]

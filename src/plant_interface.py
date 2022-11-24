@@ -77,9 +77,9 @@ class PlantInterface(object):
                 new_color = '100'
             elif 30 <= msg.data < 70:
                 new_color = '110'
-            elif 70 <= msg.data < 160:
+            elif 70 <= msg.data < 140:
                 new_color = '010'
-            elif 160 <= msg.data < 210:
+            elif 140 <= msg.data < 210:
                 new_color = '011'
             elif 210 <= msg.data < 280:
                 new_color = '001'

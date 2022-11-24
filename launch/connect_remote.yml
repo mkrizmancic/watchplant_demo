@@ -46,35 +46,35 @@ windows:
         # 'before' represents legacy functionality and will be deprecated in a future release, in favour of 'after'
         synchronize: after
         panes:
-            - rpi3 / node_0:
+            - rpi0 / node_0:
+                - ssh pi@rpi0.local
+                - roscd watchplant_demo/launch
+                - history -s bash starter.sh
+                - " clear"
+            - rpi1 / node_1:
+                - ssh pi@rpi1.local
+                - roscd watchplant_demo/launch
+                - history -s bash starter.sh
+                - " clear"
+            - rpi2 / node_2:
+                - ssh pi@rpi2.local
+                - roscd watchplant_demo/launch
+                - history -s bash starter.sh
+                - " clear"
+            - rpi3 / node_3:
                 - ssh pi@rpi3.local
                 - roscd watchplant_demo/launch
                 - history -s bash starter.sh
                 - " clear"
-            - rpi3 / read_ble:
-                - ssh pi@rpi3.local
-                - roscd watchplant_demo/src
-                - history -s ROS_NAMESPACE="$NAMESPACE" rosrun watchplant_demo read_ble.py
-                - " clear"
-            - rpi5 / node_1:
-                - ssh pi@rpi5.local
-                - roscd watchplant_demo/launch
-                - history -s bash starter.sh
-                - " clear"
-            - rpi6 / node_2:
-                - ssh pi@rpi6.local
-                - roscd watchplant_demo/launch
-                - history -s bash starter.sh
-                - " clear"
-            - rpi7 / node_3:
+            - rpi7 / node_4:
                 - ssh pi@rpi7.local
                 - roscd watchplant_demo/launch
                 - history -s bash starter.sh
                 - " clear"
-            - rpi8 / node_4:
-                - ssh pi@rpi8.local
-                - roscd watchplant_demo/launch
-                - history -s bash starter.sh
+            - rpi7 / read_ble:
+                - ssh pi@rpi7.local
+                - roscd watchplant_demo/src
+                - history -s ROS_NAMESPACE="$NAMESPACE" rosrun watchplant_demo read_ble.py
                 - " clear"
     - plant:
         - roscd watchplant_demo
