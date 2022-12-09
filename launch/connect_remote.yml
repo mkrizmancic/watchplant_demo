@@ -47,32 +47,32 @@ windows:
         synchronize: after
         panes:
             - rpi0 / node_0:
-                - ssh pi@r192.168.0.20
+                - ssh pi@192.168.0.20
                 - roscd watchplant_demo/launch
                 - history -s bash starter.sh
                 - " clear"
             - rpi1 / node_1:
-                - ssh pi@r192.168.0.21
+                - ssh pi@192.168.0.21
                 - roscd watchplant_demo/launch
                 - history -s bash starter.sh
                 - " clear"
             - rpi2 / node_2:
-                - ssh pi@r192.168.0.22
+                - ssh pi@192.168.0.22
                 - roscd watchplant_demo/launch
                 - history -s bash starter.sh
                 - " clear"
             - rpi3 / node_3:
-                - ssh pi@r192.168.0.23
+                - ssh pi@192.168.0.23
                 - roscd watchplant_demo/launch
                 - history -s bash starter.sh
                 - " clear"
             - rpi7 / node_4:
-                - ssh pi@r192.168.0.27
+                - ssh pi@192.168.0.27
                 - roscd watchplant_demo/launch
                 - history -s bash starter.sh
                 - " clear"
             - rpi7 / read_ble:
-                - ssh pi@r192.168.0.27
+                - ssh pi@192.168.0.27
                 - roscd watchplant_demo/src
                 - history -s ROS_NAMESPACE="$NAMESPACE" rosrun watchplant_demo read_ble.py
                 - " clear"
