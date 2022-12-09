@@ -84,7 +84,8 @@ windows:
         layout: tiled
         panes:
             - plotjuggler:
-                - history -s roslaunch plotjuggler_ros plotjuggler.launch
+                - roscd watchplant_demo
+                - history -s rosrun plotjuggler plotjuggler -l plotjuggler.xml
                 - " clear"
             - core:
                 - roscore

@@ -1,0 +1,8 @@
+ip=$(ip -o route get to 8.8.8.8 | sed -n 's/.*src \([0-9.]\+\).*/\1/p')
+
+nodes="0 1 2 3 7"
+
+for val in $nodes; do
+    echo "Modifying rpi$val."
+    ssh pi@rpi"$val".local "sed -ie 's/export ROS_MASTER_URI.*/export ROS_MASTER_URI=http:\/\/$ip:11311/g' ~/.bashrc"
+done
