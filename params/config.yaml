@@ -17,4 +17,4 @@ adjacency:
 initial_values:
   range: [0, 360, 1]  # star, stop, step // if step == 0, range is continuous
 
-alpha: 0.15
+alpha: 0.2

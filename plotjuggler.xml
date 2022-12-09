@@ -1,0 +1,129 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<root>
+ <tabbed_widget name="Main Window" parent="main_window">
+  <Tab containers="1" tab_name="tab1">
+   <Container>
+    <DockSplitter orientation="-" sizes="1" count="1">
+     <DockSplitter orientation="|" sizes="0.362155;0.637845" count="2">
+      <DockSplitter orientation="-" sizes="0.500564;0.499436" count="2">
+       <DockArea name="...">
+        <plot style="Lines" mode="TimeSeries" flip_x="false" flip_y="false">
+         <range left="2005.515199" top="28.404312" right="2035.157542" bottom="27.068188"/>
+         <limitY/>
+         <curve name="/local/plant_data/air_temp" color="#1f77b4"/>
+         <curve name="/local/plant_data/soil_temp" color="#d62728"/>
+        </plot>
+       </DockArea>
+       <DockArea name="...">
+        <plot style="Lines" mode="TimeSeries" flip_x="false" flip_y="false">
+         <range left="2005.515199" top="275.458910" right="2035.157542" bottom="267.848577"/>
+         <limitY/>
+         <curve name="/local/plant_data/light" color="#1f77b4"/>
+        </plot>
+       </DockArea>
+      </DockSplitter>
+      <DockSplitter orientation="-" sizes="0.500564;0.499436" count="2">
+       <DockSplitter orientation="|" sizes="0.500492;0.499508" count="2">
+        <DockArea name="...">
+         <plot style="Lines" mode="TimeSeries" flip_x="false" flip_y="false">
+          <range left="2005.515199" top="260.075000" right="2035.157542" bottom="256.925000"/>
+          <limitY/>
+          <curve name="/local/plant_data/soil_moist" color="#1f77b4"/>
+         </plot>
+        </DockArea>
+        <DockArea name="...">
+         <plot style="Lines" mode="TimeSeries" flip_x="false" flip_y="false">
+          <range left="2005.515199" top="36.618526" right="2035.157542" bottom="0.369938"/>
+          <limitY/>
+          <curve name="/local/plant_data/air_hum" color="#1f77b4"/>
+          <curve name="/local/plant_data/transpiration" color="#d62728"/>
+         </plot>
+        </DockArea>
+       </DockSplitter>
+       <DockSplitter orientation="|" sizes="0.500492;0.499508" count="2">
+        <DockArea name="...">
+         <plot style="Lines" mode="TimeSeries" flip_x="false" flip_y="false">
+          <range left="2005.515199" top="8825.975000" right="2035.157542" bottom="1057.025000"/>
+          <limitY/>
+          <curve name="/local/plant_data/diff_pot_CH1" color="#1f77b4"/>
+          <curve name="/local/plant_data/diff_pot_CH2" color="#d62728"/>
+         </plot>
+        </DockArea>
+        <DockArea name="...">
+         <plot style="Lines" mode="TimeSeries" flip_x="false" flip_y="false">
+          <range left="2005.515199" top="17668.900000" right="2035.157542" bottom="16791.100000"/>
+          <limitY/>
+          <curve name="/local/plant_data/rf_power" color="#1f77b4"/>
+         </plot>
+        </DockArea>
+       </DockSplitter>
+      </DockSplitter>
+     </DockSplitter>
+    </DockSplitter>
+   </Container>
+  </Tab>
+  <Tab containers="1" tab_name="tab2">
+   <Container>
+    <DockSplitter orientation="-" sizes="1" count="1">
+     <DockArea name="...">
+      <plot style="Lines" mode="TimeSeries" flip_x="false" flip_y="false">
+       <range left="2005.875844" top="62.807806" right="2035.960418" bottom="62.607806"/>
+       <limitY/>
+       <curve name="/rpi0/value/data" color="#1f77b4"/>
+       <curve name="/rpi1/value/data" color="#d62728"/>
+       <curve name="/rpi2/value/data" color="#1ac938"/>
+       <curve name="/rpi3/value/data" color="#ff7f0e"/>
+       <curve name="/rpi7/value/data" color="#f14cc1"/>
+       <curve name="/local/value/data" color="#9467bd"/>
+      </plot>
+     </DockArea>
+    </DockSplitter>
+   </Container>
+  </Tab>
+  <currentTabIndex index="1"/>
+ </tabbed_widget>
+ <use_relative_time_offset enabled="1"/>
+ <!-- - - - - - - - - - - - - - - -->
+ <!-- - - - - - - - - - - - - - - -->
+ <Plugins>
+  <plugin ID="DataLoad CSV">
+   <default time_axis="" delimiter="0"/>
+  </plugin>
+  <plugin ID="DataLoad MCAP"/>
+  <plugin ID="DataLoad ROS bags">
+   <use_header_stamp value="false"/>
+   <discard_large_arrays value="true"/>
+   <max_array_size value="100"/>
+   <boolean_strings_to_number value="true"/>
+   <remove_suffix_from_strings value="true"/>
+  </plugin>
+  <plugin ID="DataLoad ULog"/>
+  <plugin ID="ROS Topic Subscriber">
+   <use_header_stamp value="false"/>
+   <discard_large_arrays value="true"/>
+   <max_array_size value="100"/>
+   <boolean_strings_to_number value="true"/>
+   <remove_suffix_from_strings value="true"/>
+  </plugin>
+  <plugin ID="UDP Server"/>
+  <plugin ID="WebSocket Server"/>
+  <plugin ID="ZMQ Subscriber"/>
+  <plugin ID="Fast Fourier Transform"/>
+  <plugin ID="Quaternion to RPY"/>
+  <plugin ID="Reactive Script Editor">
+   <library code="--[[ Helper function to create a ScatterXY series from arrays.&#xa;&#xa; series_name: name of the created ScatterXY series&#xa; prefix:      prefix of the timeseries, before the index of the array&#xa; suffix_X:   suffix to complete the name of the series containing the X value.&#xa;             if [nil], the index of the array will be used.&#xa; suffix_Y:   suffix to complete the name of the series containing the Y value&#xa; timestamp:   usually the tracker_time variable&#xa;              &#xa; Example:&#xa; &#xa; Assuming we have multiple series in the form:&#xa; &#xa;   /trajectory/node.{N}/position/x&#xa;   /trajectory/node.{N}/position/y&#xa;   &#xa; where {N} is the index of the array (integer). We can create a reactive series from the array with:&#xa; &#xa;   CreateSeriesFromArray( &quot;my_trajectory&quot;, &quot;/trajectory/node&quot;,  &quot;position/x&quot;, &quot;position/y&quot;, tracker_time );&#xa;]]--&#xa;&#xa;function CreateSeriesFromArray( series_name, prefix, suffix_X, suffix_Y, timestamp )&#xa;  --- create a new series or overwite the previous one&#xa;  new_series = MutableScatterXY.new(series_name)&#xa;  &#xa;  --- Append points to new_series&#xa;  index = 0&#xa;  while(true) do&#xa;&#xa;    x = index;&#xa;    -- if not nil, get the X coordinate from a series&#xa;    if suffix_X ~= nil then &#xa;      series_x = TimeseriesView.find( string.format( &quot;%s.%d/%s&quot;, prefix, index, suffix_X) )&#xa;      if series_x == nil then break end&#xa;      x = series_x:atTime(timestamp)&#x9; &#xa;    end&#xa;    &#xa;    series_y = TimeseriesView.find( string.format( &quot;%s.%d/%s&quot;, prefix, index, suffix_Y) )&#xa;    if series_x == nil then break end &#xa;    y = series_y:atTime(timestamp)&#xa;    &#xa;    new_series:push_back(x,y)&#xa;    index = index+1&#xa;  end&#xa;end&#xa;"/>
+   <scripts/>
+  </plugin>
+  <plugin ID="CSV Exporter"/>
+  <plugin ID="ROS /rosout Visualization"/>
+  <plugin ID="ROS Topic Re-Publisher"/>
+ </Plugins>
+ <!-- - - - - - - - - - - - - - - -->
+ <previouslyLoaded_Datafiles/>
+ <previouslyLoaded_Streamer name="ROS Topic Subscriber"/>
+ <!-- - - - - - - - - - - - - - - -->
+ <customMathEquations/>
+ <snippets/>
+ <!-- - - - - - - - - - - - - - - -->
+</root>
+
