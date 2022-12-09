@@ -1,2 +1,2 @@
-bash set_up_passwordless.sh
-bash update_bashrc_remote.sh
+bash utils/set_up_passwordless.sh
+bash utils/update_bashrc_remote.sh
